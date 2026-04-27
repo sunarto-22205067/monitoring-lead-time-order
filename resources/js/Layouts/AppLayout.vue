@@ -60,9 +60,9 @@ const flash = computed(() => page.props.flash || {});
         </transition>
 
         <!-- Sidebar -->
-        <aside :class="['fixed inset-y-0 left-0 z-30 w-72 flex flex-col bg-white border-r border-slate-100 shadow-2xl lg:static lg:shadow-none transition-all duration-300 ease-in-out', sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0']">
-            <!-- Logo Area (Red Header) -->
-            <div class="flex items-center justify-between px-6 py-6 bg-[#EE2E24]">
+        <aside :class="['fixed inset-y-0 left-0 z-30 w-72 flex flex-col bg-[#EE2E24] shadow-2xl lg:static lg:shadow-none transition-all duration-300 ease-in-out', sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0']">
+            <!-- Logo Area -->
+            <div class="flex items-center justify-between px-6 py-6 border-b border-white/10">
                 <div class="flex items-center gap-3">
                     <div class="w-10 h-10 rounded-xl bg-white/20 backdrop-blur-md flex items-center justify-center shadow-inner flex-shrink-0 border border-white/30">
                         <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -80,9 +80,9 @@ const flash = computed(() => page.props.flash || {});
             </div>
 
             <!-- Nav -->
-            <nav class="flex-1 overflow-y-auto p-4 space-y-8 bg-slate-50/50">
+            <nav class="flex-1 overflow-y-auto p-4 space-y-8">
                 <div v-for="group in navigation" :key="group.label">
-                    <p class="px-4 mb-2 text-[10px] font-extrabold text-slate-400 uppercase tracking-[0.2em]">{{ group.label }}</p>
+                    <p class="px-4 mb-2 text-[10px] font-extrabold text-white/50 uppercase tracking-[0.2em]">{{ group.label }}</p>
                     <ul class="space-y-0.5">
                         <li v-for="item in group.items" :key="item.name">
                             <Link :href="item.href"
@@ -100,16 +100,16 @@ const flash = computed(() => page.props.flash || {});
             </nav>
 
             <!-- User Area -->
-            <div class="p-3 border-t border-slate-100">
+            <div class="p-3 border-t border-white/10">
                 <div class="relative">
                     <button @click="userMenuOpen = !userMenuOpen"
-                        class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-slate-50 transition-all text-left">
-                        <img :src="user.profile_photo_url" :alt="user.name" class="w-8 h-8 rounded-full object-cover ring-2 ring-slate-100 flex-shrink-0"/>
+                        class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-white/10 transition-all text-left">
+                        <img :src="user.profile_photo_url" :alt="user.name" class="w-8 h-8 rounded-full object-cover ring-2 ring-white/20 flex-shrink-0"/>
                         <div class="min-w-0 flex-1">
-                            <p class="text-sm font-semibold text-slate-900 truncate">{{ user.name }}</p>
-                            <p class="text-[10px] text-slate-400 truncate">{{ user.email }}</p>
+                            <p class="text-sm font-semibold text-white truncate">{{ user.name }}</p>
+                            <p class="text-[10px] text-white/60 truncate">{{ user.email }}</p>
                         </div>
-                        <svg class="w-4 h-4 text-slate-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-4 h-4 text-white/40 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                         </svg>
                     </button>
