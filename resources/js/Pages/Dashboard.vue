@@ -1,6 +1,25 @@
 <script setup>
-import { Head } from '@inertiajs/vue3';
+import { Head, usePage } from '@inertiajs/vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
+import { computed } from 'vue';
+
+const page = usePage();
+const user = computed(() => page.props.auth.user);
+
+const userRoles = computed(() => {
+    if (!user.value || !user.value.roles) return [];
+    return user.value.roles.map(r => r.name);
+});
+
+const welcomeMessage = computed(() => {
+    if (userRoles.value.includes('admin')) {
+        return 'Selamat bertugas kembali! Berikut adalah kendali penuh sistem monitoring jaringan hari ini.';
+    } else if (userRoles.value.includes('mitra')) {
+        return 'Pantau progress dan update status pekerjaan Anda di lapangan secara real-time.';
+    } else {
+        return 'Ringkasan performa monitoring proyek jaringan Telkom.';
+    }
+});
 
 const props = defineProps({
     stats: { type: Object, default: () => ({}) },
@@ -31,9 +50,13 @@ function statusColor(status) {
     <Head title="Dashboard" />
     <AppLayout>
         <template #header>
-            <div>
-                <h1 class="text-lg font-bold text-slate-900">Dashboard</h1>
-                <p class="text-sm text-slate-500">Ringkasan monitoring proyek jaringan Telkom</p>
+            <div class="flex items-center justify-between">
+                <div>
+                    <h1 class="text-xl font-bold text-slate-900">
+                        Selamat datang, <span class="text-[#EE2E24]">{{ user?.name || 'Pengguna' }}</span> 👋
+                    </h1>
+                    <p class="text-sm text-slate-500 mt-0.5">{{ welcomeMessage }}</p>
+                </div>
             </div>
         </template>
 
