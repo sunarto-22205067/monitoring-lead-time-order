@@ -54,6 +54,13 @@ class HandleInertiaRequests extends Middleware
             'settings' => function () {
                 return \App\Models\Setting::all()->pluck('value', 'key');
             },
+            'counts' => function () use ($request) {
+                if (!$request->user()) return [];
+                return [
+                    'activeOrders' => \App\Models\Order::where('status_project', 'active')->count(),
+                    'totalMitras' => \App\Models\Mitra::count(),
+                ];
+            },
         ];
     }
 }

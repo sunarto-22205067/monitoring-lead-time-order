@@ -5,6 +5,7 @@ import Footer from '@/Components/Footer.vue';
 
 const page = usePage();
 const user = computed(() => page.props.auth.user);
+const counts = computed(() => page.props.counts || {});
 
 const sidebarOpen = ref(true);
 const userMenuOpen = ref(false);
@@ -21,14 +22,14 @@ const navigation = [
         items: [
             { name: 'Monitoring', href: route('orders.monitoring'), icon: 'M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z', routeName: 'orders.monitoring' },
             { name: 'Analytics', href: route('orders.analytics'), icon: 'M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z', routeName: 'orders.analytics' },
-            { name: 'Orders', href: route('orders.index'), icon: 'M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2', routeName: 'orders.index' },
+            { name: 'Orders', href: route('orders.index'), icon: 'M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2', routeName: 'orders.index', badge: 'activeOrders' },
             { name: 'Upload Data', href: route('orders.upload'), icon: 'M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12', routeName: 'orders.upload' },
         ]
     },
     {
         label: 'Master Data',
         items: [
-            { name: 'Mitra', href: route('mitras.index'), icon: 'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z', routeName: 'mitras.index' },
+            { name: 'Mitra', href: route('mitras.index'), icon: 'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z', routeName: 'mitras.index', badge: 'totalMitras' },
             { name: 'Region', href: route('regions.index'), icon: 'M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z', routeName: 'regions.index' },
         ]
     },
@@ -93,7 +94,14 @@ const flash = computed(() => page.props.flash || {});
                                 <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8">
                                     <path stroke-linecap="round" stroke-linejoin="round" :d="item.icon"/>
                                 </svg>
-                                <span>{{ item.name }}</span>
+                                <span class="flex-1">{{ item.name }}</span>
+                                <span v-if="item.badge && counts[item.badge]" 
+                                      :class="['px-2 py-0.5 text-[10px] font-bold rounded-full', 
+                                          page.url.startsWith('/' + item.routeName.split('.')[0]) 
+                                          ? 'bg-[#EE2E24] text-white' 
+                                          : 'bg-white/20 text-white']">
+                                    {{ counts[item.badge] }}
+                                </span>
                             </Link>
                         </li>
                     </ul>
