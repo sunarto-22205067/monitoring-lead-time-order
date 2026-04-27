@@ -5,7 +5,7 @@ import { Link, usePage, router } from '@inertiajs/vue3';
 const page = usePage();
 const user = computed(() => page.props.auth.user);
 
-const sidebarOpen = ref(false);
+const sidebarOpen = ref(true);
 const userMenuOpen = ref(false);
 
 const navigation = [
@@ -74,7 +74,7 @@ const flash = computed(() => page.props.flash || {});
                         <p class="text-[10px] text-white/70 font-bold uppercase tracking-widest">Monitoring</p>
                     </div>
                 </div>
-                <button @click="sidebarOpen = false" class="p-1.5 rounded-lg text-white hover:bg-white/10 transition-colors">
+                <button @click="sidebarOpen = false" class="p-1.5 rounded-lg text-white hover:bg-white/10 transition-colors lg:hidden">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
                 </button>
             </div>
@@ -88,7 +88,7 @@ const flash = computed(() => page.props.flash || {});
                             <Link :href="item.href"
                                 :class="page.url.startsWith('/' + item.routeName.split('.')[0])
                                     ? 'sidebar-link-active' : 'sidebar-link'"
-                                @click="sidebarOpen = false">
+                                @click="sidebarOpen = window.innerWidth < 1024 ? false : sidebarOpen">
                                 <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8">
                                     <path stroke-linecap="round" stroke-linejoin="round" :d="item.icon"/>
                                 </svg>
@@ -131,7 +131,7 @@ const flash = computed(() => page.props.flash || {});
         </aside>
 
         <!-- Main Content -->
-        <div :class="['flex-1 flex flex-col min-w-0 overflow-hidden transition-all duration-300', sidebarOpen ? 'lg:pl-0' : '']">
+        <div :class="['flex-1 flex flex-col min-w-0 overflow-hidden transition-all duration-300', sidebarOpen ? 'lg:ml-72' : 'ml-0']">
             <!-- Top Bar -->
             <header class="bg-white border-b border-slate-100 px-4 lg:px-8 py-5 flex items-center gap-5 sticky top-0 z-10">
                 <button @click="sidebarOpen = !sidebarOpen" class="p-2.5 rounded-xl bg-slate-50 text-slate-600 hover:bg-red-50 hover:text-[#EE2E24] transition-all border border-slate-200">
