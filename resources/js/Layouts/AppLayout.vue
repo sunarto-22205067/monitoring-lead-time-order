@@ -91,8 +91,8 @@ const flash = computed(() => page.props.flash || {});
                     <ul class="space-y-1">
                         <li v-for="item in group.items" :key="item.name">
                             <Link :href="item.href"
-                                :class="page.url.startsWith('/' + item.routeName.split('.')[0])
-                                    ? 'sidebar-link-active' : 'sidebar-link'"
+                                :class="[page.url.startsWith('/' + item.routeName.split('.')[0])
+                                    ? 'sidebar-link-active' : 'sidebar-link', 'group']"
                                 @click="sidebarOpen = window.innerWidth < 1024 ? false : sidebarOpen">
                                 
                                 <div :class="['w-8 h-8 rounded-lg flex items-center justify-center transition-colors', 
