@@ -42,8 +42,16 @@ const navigation = [
     },
 ];
 
-function isActive(routeName) {
-    return page.component.startsWith(routeName.replace('.', '/').replace(/\./g, '/'));
+function isItemActive(item) {
+    if (route().current(item.routeName)) return true;
+    
+    // Handlers for sub-pages (create/edit views)
+    const baseRoute = item.routeName.replace('.index', '');
+    if (item.routeName.endsWith('.index') && (route().current(`${baseRoute}.create`) || route().current(`${baseRoute}.edit`) || route().current(`${baseRoute}.show`))) {
+        return true;
+    }
+    
+    return false;
 }
 
 function logout() {
@@ -91,12 +99,11 @@ const flash = computed(() => page.props.flash || {});
                     <ul class="space-y-1">
                         <li v-for="item in group.items" :key="item.name">
                             <Link :href="item.href"
-                                :class="[page.url.startsWith('/' + item.routeName.split('.')[0])
-                                    ? 'sidebar-link-active' : 'sidebar-link', 'group']"
+                                :class="[isItemActive(item) ? 'sidebar-link-active' : 'sidebar-link', 'group']"
                                 @click="sidebarOpen = window.innerWidth < 1024 ? false : sidebarOpen">
                                 
                                 <div :class="['w-8 h-8 rounded-lg flex items-center justify-center transition-colors', 
-                                    page.url.startsWith('/' + item.routeName.split('.')[0]) ? 'bg-red-50 text-[#EE2E24]' : 'bg-white/10 text-white group-hover:bg-white/20']">
+                                    isItemActive(item) ? 'bg-red-50 text-[#EE2E24]' : 'bg-white/10 text-white group-hover:bg-white/20']">
                                     <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                                         <path stroke-linecap="round" stroke-linejoin="round" :d="item.icon"/>
                                     </svg>
@@ -106,9 +113,7 @@ const flash = computed(() => page.props.flash || {});
                                 
                                 <span v-if="item.badge && counts[item.badge]" 
                                       :class="['px-2 py-0.5 text-[10px] font-bold rounded-full shadow-sm', 
-                                          page.url.startsWith('/' + item.routeName.split('.')[0]) 
-                                          ? 'bg-red-100 text-[#EE2E24]' 
-                                          : 'bg-white/20 text-white']">
+                                          isItemActive(item) ? 'bg-red-100 text-[#EE2E24]' : 'bg-white/20 text-white']">
                                     {{ counts[item.badge] }}
                                 </span>
                             </Link>
