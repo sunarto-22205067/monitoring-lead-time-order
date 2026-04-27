@@ -1,6 +1,7 @@
 <script setup>
 import { ref, computed } from 'vue';
 import { Link, usePage, router } from '@inertiajs/vue3';
+import Footer from '@/Components/Footer.vue';
 
 const page = usePage();
 const user = computed(() => page.props.auth.user);
@@ -168,9 +169,12 @@ const flash = computed(() => page.props.flash || {});
             </div>
 
             <!-- Page Content -->
-            <main class="flex-1 overflow-y-auto p-4 lg:p-6">
+            <main class="flex-1 overflow-y-auto p-4 lg:p-6 bg-slate-50/50">
                 <slot />
             </main>
+
+            <!-- Footer -->
+            <Footer />
         </div>
     </div>
 </template>
