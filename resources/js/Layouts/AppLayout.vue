@@ -82,23 +82,32 @@ const flash = computed(() => page.props.flash || {});
             </div>
             
             <!-- Nav -->
-            <nav class="flex-1 overflow-y-auto p-4 space-y-8">
-                <div v-for="group in navigation" :key="group.label">
-                    <p class="px-4 mb-2 text-[10px] font-extrabold text-white/50 uppercase tracking-[0.2em]">{{ group.label }}</p>
-                    <ul class="space-y-0.5">
+            <nav class="flex-1 overflow-y-auto p-4 space-y-6">
+                <div v-for="group in navigation" :key="group.label" class="space-y-3">
+                    <div class="flex items-center gap-3 px-2">
+                        <p class="text-[10px] font-black text-white/40 uppercase tracking-[0.2em]">{{ group.label }}</p>
+                        <div class="flex-1 h-px bg-gradient-to-r from-white/10 to-transparent"></div>
+                    </div>
+                    <ul class="space-y-1">
                         <li v-for="item in group.items" :key="item.name">
                             <Link :href="item.href"
                                 :class="page.url.startsWith('/' + item.routeName.split('.')[0])
                                     ? 'sidebar-link-active' : 'sidebar-link'"
                                 @click="sidebarOpen = window.innerWidth < 1024 ? false : sidebarOpen">
-                                <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8">
-                                    <path stroke-linecap="round" stroke-linejoin="round" :d="item.icon"/>
-                                </svg>
-                                <span class="flex-1">{{ item.name }}</span>
+                                
+                                <div :class="['w-8 h-8 rounded-lg flex items-center justify-center transition-colors', 
+                                    page.url.startsWith('/' + item.routeName.split('.')[0]) ? 'bg-red-50 text-[#EE2E24]' : 'bg-white/10 text-white group-hover:bg-white/20']">
+                                    <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" :d="item.icon"/>
+                                    </svg>
+                                </div>
+
+                                <span class="flex-1 transform group-hover:translate-x-1 transition-transform duration-200">{{ item.name }}</span>
+                                
                                 <span v-if="item.badge && counts[item.badge]" 
-                                      :class="['px-2 py-0.5 text-[10px] font-bold rounded-full', 
+                                      :class="['px-2 py-0.5 text-[10px] font-bold rounded-full shadow-sm', 
                                           page.url.startsWith('/' + item.routeName.split('.')[0]) 
-                                          ? 'bg-[#EE2E24] text-white' 
+                                          ? 'bg-red-100 text-[#EE2E24]' 
                                           : 'bg-white/20 text-white']">
                                     {{ counts[item.badge] }}
                                 </span>
