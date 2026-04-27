@@ -58,10 +58,10 @@
         @apply text-sm text-slate-700 py-3.5 px-4;
     }
     .sidebar-link {
-        @apply flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-xl text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-all duration-150;
+        @apply flex items-center gap-3 px-4 py-3 text-sm font-semibold rounded-xl text-slate-500 hover:bg-white hover:text-[#EE2E24] hover:shadow-sm transition-all duration-200;
     }
     .sidebar-link-active {
-        @apply flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-xl bg-red-50 text-red-700;
+        @apply flex items-center gap-3 px-4 py-3 text-sm font-bold rounded-xl bg-white text-[#EE2E24] shadow-md border-l-4 border-[#EE2E24];
     }
 }
 

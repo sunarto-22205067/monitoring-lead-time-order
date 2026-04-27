@@ -60,24 +60,29 @@ const flash = computed(() => page.props.flash || {});
         </transition>
 
         <!-- Sidebar -->
-        <aside :class="['fixed inset-y-0 left-0 z-30 w-64 flex flex-col bg-white border-r border-slate-100 shadow-lg lg:static lg:shadow-none transition-transform duration-300', sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0']">
-            <!-- Logo -->
-            <div class="flex items-center gap-3 px-5 py-5 border-b border-slate-100">
-                <div class="w-9 h-9 rounded-xl bg-red-600 flex items-center justify-center shadow-sm flex-shrink-0">
-                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18"/>
-                    </svg>
+        <aside :class="['fixed inset-y-0 left-0 z-30 w-72 flex flex-col bg-white border-r border-slate-100 shadow-2xl lg:static lg:shadow-none transition-all duration-300 ease-in-out', sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0']">
+            <!-- Logo Area (Red Header) -->
+            <div class="flex items-center justify-between px-6 py-6 bg-[#EE2E24]">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-white/20 backdrop-blur-md flex items-center justify-center shadow-inner flex-shrink-0 border border-white/30">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18"/>
+                        </svg>
+                    </div>
+                    <div class="min-w-0">
+                        <p class="text-base font-black text-white tracking-tight uppercase">Telkom DMS</p>
+                        <p class="text-[10px] text-white/70 font-bold uppercase tracking-widest">Monitoring</p>
+                    </div>
                 </div>
-                <div class="min-w-0">
-                    <p class="text-sm font-bold text-slate-900 truncate">Telkom DMS</p>
-                    <p class="text-[10px] text-slate-400 font-medium">Monitoring System</p>
-                </div>
+                <button @click="sidebarOpen = false" class="lg:hidden p-1.5 rounded-lg text-white hover:bg-white/10 transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
             </div>
 
             <!-- Nav -->
-            <nav class="flex-1 overflow-y-auto p-3 space-y-6">
+            <nav class="flex-1 overflow-y-auto p-4 space-y-8 bg-slate-50/50">
                 <div v-for="group in navigation" :key="group.label">
-                    <p class="px-3 mb-1.5 text-[9px] font-bold text-slate-400 uppercase tracking-widest">{{ group.label }}</p>
+                    <p class="px-4 mb-2 text-[10px] font-extrabold text-slate-400 uppercase tracking-[0.2em]">{{ group.label }}</p>
                     <ul class="space-y-0.5">
                         <li v-for="item in group.items" :key="item.name">
                             <Link :href="item.href"
@@ -128,9 +133,9 @@ const flash = computed(() => page.props.flash || {});
         <!-- Main Content -->
         <div class="flex-1 flex flex-col min-w-0 overflow-hidden">
             <!-- Top Bar -->
-            <header class="bg-white border-b border-slate-100 px-4 lg:px-6 py-4 flex items-center gap-4">
-                <button @click="sidebarOpen = true" class="lg:hidden p-2 rounded-xl text-slate-500 hover:bg-slate-100 transition-colors">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+            <header class="bg-white border-b border-slate-100 px-4 lg:px-8 py-5 flex items-center gap-5 sticky top-0 z-10">
+                <button @click="sidebarOpen = true" class="lg:hidden p-2.5 rounded-xl bg-slate-50 text-slate-600 hover:bg-red-50 hover:text-[#EE2E24] transition-all border border-slate-200">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M4 6h16M4 12h16M4 18h16"/></svg>
                 </button>
 
                 <div class="flex-1">
